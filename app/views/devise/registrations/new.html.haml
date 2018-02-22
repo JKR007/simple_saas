@@ -29,7 +29,15 @@
           = f.label :password_confirmation, "Re-enter Password", :class => "label"
           = f.password_field :password_confirmation, :class => "text_field"
           %span.description to confirm your password
-
+        =fields_for(:tenant) do |w|
+          .form-group.col-md_6.no-left_padding
+            =w.label :name, 'Organization'
+            %span.description
+              (Unique name for your group or organization for the new account)
+            =w.text_field :name, required: true, class: "form-control"
+          .form-group.col-md_6.no-right_padding
+            =w.label :plan
+            =w.select :plan, options_for_select(Plan.options, params[:plan]), {}, required: true, class: "form-control"
         .group
           = fields_for( :tenant ) do |w|
             = w.label( :name, 'Organization', :class => "label" )
@@ -50,4 +58,3 @@
           %button.button{ :type => "submit" }
             Sign up
       = render :partial => "devise/shared/links"
-
